@@ -1,0 +1,53 @@
+<div class="container">
+<img src="assets/img/burger.png">
+<h1>Eat-Da-Burger</h1>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Burgers to Eat!</h2>
+      {{#each burgers}}
+    
+      {{#unless devoured}}
+
+      <p>
+    <div class="row">
+      <div class="col-sm-3">
+       {{this.name}}
+      </div>
+      <div class="col-sm-3">
+        <form action="/devoured?_method=PUT" method="POST">
+          <input type="hidden" name="devoured" value="{{this.id}}">
+          <button class="btn btn-danger" type="submit">Devour it!</button>
+        </form>
+      </div>
+    </div>
+      </p>
+      {{/unless }}
+      {{/each}}
+  </div>
+<!--line 25 set to false-->
+<!--line 33 if true, then post-->
+  <div class="col-sm-6">
+    <h2>Burgers Devoured!</h2>
+      {{#each burgers}}
+      {{#if this.devoured}}
+      <div class="well Devoured">
+      {{this.name}}
+
+        <form action="/{{this.id}}?_method=DELETE" method="POST">
+          <input type="hidden" name="devoured" value="true">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+
+      </div>
+      {{/if}}
+      {{/each}}
+  </div>
+</div>
+
+<h2>Enter a burger you want to eat, then click "Submit"</h2>
+<form action="/burgers/add" method="POST">
+  <textarea name="burger_name"></textarea>
+  <button class="btn btn-warning" type="submit">Submit</button>
+</form>
+</div>
